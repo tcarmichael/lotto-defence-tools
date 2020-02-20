@@ -9,3 +9,11 @@ build/
 
 # Directory created by dartdoc
 doc/api/
+
+# Visual Studio Code folders
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace

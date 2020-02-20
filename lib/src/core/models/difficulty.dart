@@ -1,0 +1,18 @@
+enum Difficulty {
+  practice,
+  veryEasy,
+  easy,
+  normal,
+  hard,
+  veryHard,
+  hell,
+  inferno,
+  lunatic,
+  holic,
+  epic,
+  ultimate,
+  impossible,
+  theFinal,
+  hallOfFame,
+  towerOfChallenge,
+}
