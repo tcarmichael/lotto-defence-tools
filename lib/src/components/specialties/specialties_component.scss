@@ -1,0 +1,16 @@
+@import 'package:angular_components/css/material/material';
+@import 'package:angular_components/material_button/mixins';
+
+.specialties {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.specialties > div {
+}
+
+.specialties > div > * {
+}
+
+@include button-background-color(".maxed", $mat-yellow);

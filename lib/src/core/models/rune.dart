@@ -29,9 +29,9 @@ enum AwakeningStage {
 class Rune {
   Stats baseStats = Stats.empty();
   int enchantLevel = 0;
-  AwakeningStage awakeningStage = AwakeningStage.None;
+  int sp = 0;
   List<RuneOptions> options = [RuneOptions.Unknown, RuneOptions.Unknown];
-  int sp;
+  AwakeningStage awakeningStage = AwakeningStage.None;
 
   Rune.empty();
   Rune(this.baseStats, this.enchantLevel, this.awakeningStage, this.options, this.sp);

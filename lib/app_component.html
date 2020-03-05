@@ -1,3 +1,15 @@
-<h1>My First AngularDart App</h1>
+<h1>SP Optimizer</h1>
 
-<todo-list></todo-list>
+<material-expansionpanel acxDarkTheme name="Profile" darkTheme [showSaveCancel]="false">
+    <profile></profile>
+</material-expansionpanel>
+
+<material-expansionpanel name="Environment" [showSaveCancel]="false">
+    <environment></environment>
+</material-expansionpanel>
+
+<material-expansionpanel name="Specialties" [showSaveCancel]="false">
+    <specialties></specialties>
+</material-expansionpanel>
+
+<material-button raised (trigger)="optimize()">Optimize!</material-button>

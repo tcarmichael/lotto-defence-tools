@@ -1,0 +1,222 @@
+<header role="presentation">
+    <h2 header *ngIf="selectedEnvironment != null">
+        Configuration: {{selectedEnvironment}}
+    </h2>
+</header>
+
+<div *ngIf="env != null">
+    <div class="columns">
+        <div>
+            <material-toggle label="DT"
+                [(checked)]="env.dt">
+            </material-toggle>
+
+            <material-toggle label="Self Bless"
+                [(checked)]="env.selfBless">
+            </material-toggle>
+
+            <material-toggle label="Helpful"
+                [(checked)]="env.helpful">
+            </material-toggle>
+
+            <material-toggle label="Use Average Upgrade"
+                [(checked)]="env.useAverageUpgrade">
+            </material-toggle>
+
+            <material-toggle label="Single Unit Buff"
+                [(checked)]="env.singleUnitBuff">
+            </material-toggle>
+
+            <material-toggle label="Flower Attack Damage"
+                [(checked)]="env.flowerAttackDamage">
+            </material-toggle>
+
+            <material-toggle label="Flower Attack Speed"
+                [(checked)]="env.flowerAttackSpeed">
+            </material-toggle>
+
+            <material-toggle label="Flower Damage Taken"
+                [(checked)]="env.flowerDamageTaken">
+            </material-toggle>
+        </div>
+
+        <div>
+            <material-toggle label="Artifact"
+                [(checked)]="env.haveArtifact">
+            </material-toggle>
+
+            <material-toggle label="Spec Ops Nova"
+                [(checked)]="env.haveSpecOps">
+            </material-toggle>
+
+            <material-toggle label="Terra Tron"
+                [(checked)]="env.haveTerraTron">
+            </material-toggle>
+
+            <material-toggle label="Amon"
+                [(checked)]="env.haveAmon">
+            </material-toggle>
+
+            <material-toggle label="Spear of Adun"
+                [(checked)]="env.haveSpearOfAdun">
+            </material-toggle>
+
+            <material-toggle label="Xel'Naga Kerrigan"
+                [(checked)]="env.haveXelnagaKerrigan">
+            </material-toggle>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div>
+            <material-input label="Target Round"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.targetRound">
+            </material-input>
+
+            <material-input label="Duplicate Unit Penalty"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.duplicateUnitPenalty">
+            </material-input>
+
+            <material-input label="Limit Break Level"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.limitBreak">
+            </material-input>
+
+            <material-input label="Torments"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.torments">
+            </material-input>
+
+            <material-input label="Unit Level"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.unitLevel">
+            </material-input>
+        </div>
+
+        <div>
+            <material-input label="Team Attack Damage Buff"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.teamAttackDamage">
+            </material-input>
+
+            <material-input label="Team Attack Speed Buff"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.teamAttackSpeed">
+            </material-input>
+
+            <material-input label="Team Crit Chance Buff"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.teamCritChance">
+            </material-input>
+
+            <material-input label="Team Bless"
+                type="number"
+                floatingLabel checkNonNegative
+                [(ngModel)]="env.teamBless">
+            </material-input>
+
+            <material-button raised (trigger)="maxTeamBuffs()">Max Team Buffs</material-button>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div>
+            <material-dropdown-select
+                [buttonText]="env.difficulty == null ? 'Select Difficulty' : difficultyRenderer(env.difficulty)"
+                [itemRenderer]="difficultyRenderer"
+                [options]="Difficulty.values"
+                [(ngModel)]="env.difficulty">
+            </material-dropdown-select>
+        </div>
+
+        <div>
+            <material-dropdown-select
+                [buttonText]="env.unitRank == null ? 'Select Rank' : rankRenderer(env.unitRank)"
+                [itemRenderer]="rankRenderer"
+                [options]="Rank.values"
+                [(ngModel)]="env.unitRank">
+            </material-dropdown-select>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <material-yes-no-buttons
+        saveCancel
+        noText="Load"
+        (yes)="showSaveDialog = true"
+        (no)="showLoadDialog = true"></material-yes-no-buttons>
+</footer>
+
+<modal [(visible)]="showSaveDialog">
+    <material-dialog headered>
+        <h1 header>Save Environment Configuration</h1>
+
+        <div background="red">
+            <material-select focusList>
+                <material-select-item *ngFor="let config of environmentService.keys"
+                    focusItem
+                    (trigger)="selectedEnvironment = config"
+                    [selected]="selectedEnvironment == config">
+                    {{config}}
+                    <material-button
+                        icon
+                        (trigger)="deleteEnvironment(config)">
+                        <material-icon baseline icon="delete" size="large"></material-icon>
+                    </material-button>
+                </material-select-item>
+            </material-select>
+        </div>
+
+        <div footer>
+            <material-input label="Configuration name"
+                required
+                [(ngModel)]="selectedEnvironment"></material-input>
+
+            <material-yes-no-buttons
+                saveCancel
+                (no)="showSaveDialog = false"
+                (yes)="save(); showSaveDialog = false"></material-yes-no-buttons>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [(visible)]="showLoadDialog">
+    <material-dialog headered>
+        <h1 header>Load Environment Configuration</h1>
+
+        <div background="red">
+            <material-select focusList>
+                <material-select-item *ngFor="let config of environmentService.keys"
+                    focusItem
+                    (trigger)="selectedEnvironment = config"
+                    [selected]="selectedEnvironment == config">
+                    {{config}}
+                    <material-button
+                        icon
+                        (trigger)="deleteEnvironment(config)">
+                        <material-icon baseline icon="delete" size="large"></material-icon>
+                    </material-button>
+                </material-select-item>
+            </material-select>
+        </div>
+
+        <div footer>
+            <material-yes-no-buttons
+                saveCancel
+                yesText="Load"
+                (no)="showLoadDialog = false"
+                (yes)="load(); showLoadDialog = false"></material-yes-no-buttons>
+        </div>
+    </material-dialog>
+</modal>

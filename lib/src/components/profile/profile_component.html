@@ -1,0 +1,112 @@
+<!-- Components info: https://angulardart.dev/components -->
+<div *ngIf="profile != null">
+    <div id="runes">
+        <ul id="runelist">
+            <li *ngFor="let rune of profile.runes; let i = index"
+                class="rune"
+                [attr.data-index]="i"
+                [class.hasrune]="rune != null"
+                [class.norune]="rune == null"
+                [class.selectedrune]="i == profile.selectedRuneIndex"
+                (click)="onSelect(i)">
+                <div class="runeicon">
+                    <div *ngIf="rune == null">
+                        <material-button
+                            icon
+                            (trigger)="addRune(i)">
+                            <material-icon baseline icon="add" size="large"></material-icon>
+                        </material-button>
+                    </div>
+                    <div *ngIf="rune != null">
+                        <material-button
+                            icon
+                            (trigger)="removeRune(i)">
+                            <material-icon baseline icon="delete" size="large"></material-icon>
+                        </material-button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    
+        <div *ngIf="profile.selectedRune != null" id="runestats">
+            <material-input label="Attack Damage"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.baseStats.attackDamage">
+            </material-input>
+    
+            <material-input label="Attack Speed"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.baseStats.attackSpeed">
+            </material-input>
+    
+            <material-input label="Crit Chance"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.baseStats.critChance">
+            </material-input>
+    
+            <material-input label="Crit Damage"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.baseStats.critDamage">
+            </material-input>
+    
+            <material-input label="Enchant Level"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.enchantLevel">
+            </material-input>
+    
+            <material-input label="SP"
+                type="number"
+                checkNonNegative floatingLabel
+                [(ngModel)]="profile.selectedRune.sp">
+            </material-input>
+    
+            <material-dropdown-select
+                *ngIf="profile.selectedRune.enchantLevel >= 10"
+                buttonText="{{profile.selectedRune.options[0]}}"
+                [(selection)]="profile.selectedRune.options[0]"
+                [options]="RuneOptions.values">
+            </material-dropdown-select>
+    
+            <material-dropdown-select
+                *ngIf="profile.selectedRune.enchantLevel >= 15"
+                buttonText="{{profile.selectedRune.options[0]}}"
+                [(selection)]="profile.selectedRune.options[0]"
+                [options]="RuneOptions.values">
+            </material-dropdown-select>
+        </div>
+    </div>
+
+    <div>
+        <material-input label="Experience"
+            type="number"
+            floatingLabel checkNonNegative
+            [(ngModel)]="profile.xp">
+        </material-input>
+
+        <material-input label="Donation SP"
+            type="number"
+            floatingLabel checkNonNegative
+            [(ngModel)]="profile.donationSp">
+        </material-input>
+
+        <material-dropdown-select
+            buttonText="{{profile.title}}"
+            [(selection)]="profile.title"
+            [options]="Title.values">
+        </material-dropdown-select>
+    </div>
+
+    <div class="saveclear">
+        <material-button raised (trigger)="save()">Save</material-button>
+        <material-button raised (trigger)="clear()">Clear</material-button>
+    </div>
+</div>
+
+<p *ngIf="profile == null">
+  Loading profile...
+</p>

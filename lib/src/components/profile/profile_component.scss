@@ -1,0 +1,47 @@
+@import 'package:angular_components/css/material/material';
+
+#runes {
+  background-color: $mat-grey-700;
+  padding: $mat-grid;
+  color: $mat-white;
+}
+
+#runelist {
+  display: flex;
+  list-style-type: none;
+  padding-inline-start: 0;
+  justify-content: center;
+}
+
+.rune {
+  border-radius: 10px;
+  float: left;
+  height: 64px;
+  margin: 0em 1em;
+  width: 64px;
+}
+
+.rune:hover {
+  background-color: $mat-light-green-700;
+}
+
+.rune material-button {
+  display: inline-block;
+  margin: auto;
+}
+
+.rune.norune {
+  border: 2px dashed $mat-grey-900;
+}
+
+.rune.hasrune {
+  border: 2px solid $mat-grey-900;
+}
+
+.selectedrune {
+  background-color: $mat-light-green-900;
+}
+
+.saveclear {
+  float: right;
+}

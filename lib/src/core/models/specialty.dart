@@ -35,6 +35,9 @@ class Specialty {
       var d = data.costIncrease;
       var n = pointsBought;
       return (n * (2 * a + (n - 1) * d)) / 2;
+      // Sum from 1 to n-1. The first buy won't contain the next-point-cost value, thus n-1 instead of n.
+      var s = n * (n - 1) / 2;
+      return n * a + d * s;
     }
   }
 

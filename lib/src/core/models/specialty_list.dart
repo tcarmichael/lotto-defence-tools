@@ -34,7 +34,7 @@ class SpecialtyList {
     print('Max SP: $maxSp');
 
     while (sp < maxSp) {
-      var spEfficiencies = calcSpEfficiencies(env, ep, gems, profile.rune);
+      var spEfficiencies = calcSpEfficiencies(env, ep, gems, profile.selectedRune);
 
       if (sp == 0) {
         spEfficiencies.forEach((o) => print('Efficency: ${o.efficiency}'));

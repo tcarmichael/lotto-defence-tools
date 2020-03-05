@@ -7,17 +7,23 @@ part of 'profile.dart';
 // **************************************************************************
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) {
-  return Profile(
-    Rune.fromJson(json['rune'] as Map<String, dynamic>),
-    _$enumDecode(_$TitleEnumMap, json['title']),
-    json['xp'] as int,
-  );
+  return Profile()
+    ..runes = (json['runes'] as List)
+        ?.map(
+            (e) => e == null ? null : Rune.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..selectedRuneIndex = json['selectedRuneIndex'] as int
+    ..title = _$enumDecodeNullable(_$TitleEnumMap, json['title'])
+    ..xp = json['xp'] as int
+    ..donationSp = json['donationSp'] as int;
 }
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
-      'rune': instance.rune,
+      'runes': instance.runes,
+      'selectedRuneIndex': instance.selectedRuneIndex,
       'title': _$TitleEnumMap[instance.title],
       'xp': instance.xp,
+      'donationSp': instance.donationSp,
     };
 
 T _$enumDecode<T>(
@@ -39,6 +45,17 @@ T _$enumDecode<T>(
         '${enumValues.values.join(', ')}');
   }
   return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$TitleEnumMap = {

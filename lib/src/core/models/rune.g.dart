@@ -21,9 +21,9 @@ Rune _$RuneFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$RuneToJson(Rune instance) => <String, dynamic>{
       'baseStats': instance.baseStats,
       'enchantLevel': instance.enchantLevel,
-      'awakeningStage': _$AwakeningStageEnumMap[instance.awakeningStage],
-      'options': instance.options.map((e) => _$RuneOptionsEnumMap[e]).toList(),
       'sp': instance.sp,
+      'options': instance.options.map((e) => _$RuneOptionsEnumMap[e]).toList(),
+      'awakeningStage': _$AwakeningStageEnumMap[instance.awakeningStage],
     };
 
 T _$enumDecode<T>(

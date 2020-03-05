@@ -1,11 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'difficulty.dart';
 import 'rank.dart';
 import 'title.dart';
 
 import 'dart:math';
 
+part 'environment.g.dart';
+
+@JsonSerializable(nullable: true)
 class Environment {
-  Difficulty difficulty = Difficulty.practice;
   bool dt = false;
   bool flowerAttackDamage = false;
   bool flowerAttackSpeed = false;
@@ -19,6 +23,7 @@ class Environment {
   bool haveXelnagaKerrigan = false;
   bool helpful = false;
   bool singleUnitBuff = false;
+  bool useAverageUpgrade = false;
   num duplicateUnitPenalty = 0;
   num limitBreak = 0;
   num targetRound = 0;
@@ -28,8 +33,13 @@ class Environment {
   num teamBless = 0;
   num torments = 0;
   num unitLevel = 0;
-  Rank unitRank = Rank.D;
-  bool useAverageUpgrade = false;
+  Difficulty difficulty;
+  Rank unitRank;
+
+  Environment();
+
+  factory Environment.fromJson(Map<String, dynamic> json) => _$EnvironmentFromJson(json);
+  Map<String, dynamic> toJson() => _$EnvironmentToJson(this);
 
   num calcAverageUpgrade() {
     var calculatedUpgradeChances = 0;

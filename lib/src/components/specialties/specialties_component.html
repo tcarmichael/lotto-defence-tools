@@ -1,0 +1,24 @@
+<div>
+    <material-tab-panel>
+        <material-tab
+            *ngFor="let title of spByTitle.keys"
+            [label]="title.toString().split('.').last">
+            <div class="specialties">
+                <div *ngFor="let sp of spByTitle[title]">
+                    <material-input [label]="sp.data.name"
+                        type="number"
+                        checkInteger checkNonNegative floatingLabel
+                        [(ngModel)]="sp.pointsBought"
+                        [upperBound]="sp.data.maxPoints">
+                    </material-input>
+
+                    <material-button
+                        raised
+                        [class.maxed]="sp.pointsBought == sp.data.maxPoints"
+                        (trigger)="setMaxPoints(sp)">Max
+                    </material-button>
+                </div>
+            </div>
+        </material-tab>
+    </material-tab-panel>
+</div>
