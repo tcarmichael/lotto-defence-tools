@@ -1,6 +1,4 @@
 @import 'package:angular_components/css/material/material';
-@import 'package:angular_components/material_select/mixins';
-
 .columns {
     display: flex;
     flex-wrap: wrap;
@@ -14,19 +12,4 @@
 .columns > div > * {
     display: block;
     padding: 0.5em;
-}
-
-material-dialog {
-    width: $mat-grid * 60;
-}
-
-material-select {
-    border: 1px solid $mat-black;
-    margin: $mat-grid;
-    overflow: hidden;
-    width: 100%;
-}
-
-material-select-item {
-    justify-content: space-between;
 }

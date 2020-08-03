@@ -1,3 +1,20 @@
+@import 'package:angular_components/material_select/mixins';
+
 :host {
     /* This is equivalent of the 'body' selector of a page. */
+}
+
+material-dialog {
+    width: $mat-grid * 60;
+}
+
+material-select {
+    border: 1px solid $mat-black;
+    margin: $mat-grid;
+    overflow: hidden;
+    width: 100%;
+}
+
+material-select-item {
+    justify-content: space-between;
 }

@@ -1,13 +1,8 @@
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:lotto_defence_tools/src/core/models/environment.dart';
-import 'package:lotto_defence_tools/src/services/environment_service.dart';
 
 import '../../../core.dart';
-
-EnvironmentService environmentServiceFactory() => EnvironmentService(window.localStorage);
 
 @Component(
   selector: 'environment',
@@ -16,27 +11,20 @@ EnvironmentService environmentServiceFactory() => EnvironmentService(window.loca
   directives: [
     materialInputDirectives,
     materialNumberInputDirectives,
-    AutoFocusDirective,
     DropdownSelectValueAccessor,
     DropdownButtonComponent,
     MaterialButtonComponent,
-    MaterialDialogComponent,
     MaterialDropdownSelectComponent,
     MaterialIconComponent,
-    MaterialSaveCancelButtonsDirective,
     MaterialSelectDropdownItemComponent,
-    MaterialSelectComponent,
-    MaterialSelectItemComponent,
     MaterialToggleComponent,
-    MaterialYesNoButtonsComponent,
-    ModalComponent,
     NgIf,
     NgFor,
   ],
-  providers: [FactoryProvider(EnvironmentService, environmentServiceFactory), materialProviders],
+  providers: [materialProviders],
   exports: [Difficulty, Rank],
 )
-class EnvironmentComponent implements OnInit {
+class EnvironmentComponent {
   static const Map<Difficulty, String> _prettyDifficultyNames = {
     Difficulty.practice: 'Practice',
     Difficulty.veryEasy: 'Very Easy',
@@ -70,30 +58,13 @@ class EnvironmentComponent implements OnInit {
     Rank.RXD: 'RXD',
   };
 
-  final EnvironmentService environmentService;
+  @Input()
   Environment env;
-  String selectedEnvironment;
-  bool showSaveDialog = false;
-  bool showLoadDialog = false;
-
-  EnvironmentComponent(this.environmentService);
 
   ItemRenderer difficultyRenderer =
     (d) => _prettyDifficultyNames[d];
   ItemRenderer rankRenderer =
     (r) => _prettyRankNames[r];
-
-  @override
-  void ngOnInit() {
-    if (environmentService.isNotEmpty) {
-      selectedEnvironment = environmentService.keys.first;
-      env = environmentService[selectedEnvironment];
-    } else {
-      env = Environment();
-      selectedEnvironment = null;
-      setReasonableDefaults(env);
-    }
-  }
 
   void maxTeamBuffs() {
     env.teamAttackDamage = 54;
@@ -102,25 +73,5 @@ class EnvironmentComponent implements OnInit {
     if (env.selfBless) {
       env.teamBless = 40;
     }
-  }
-
-  void save() {
-    environmentService[selectedEnvironment] = env;
-  }
-
-  void load() {
-    env = environmentService[selectedEnvironment];
-  }
-
-  void deleteEnvironment(String key) {
-    environmentService.remove(key);
-  }
-
-  static void setReasonableDefaults(Environment e) {
-    e.dt = true;
-    e.selfBless = true;
-    e.useAverageUpgrade = true;
-    e.helpful = true;
-    e.unitRank = Rank.S;
   }
 }

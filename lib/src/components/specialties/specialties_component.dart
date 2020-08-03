@@ -38,12 +38,13 @@ Map<T, List<S>> groupBy<S, T>(Iterable<S> values, T Function(S) key) {
   exports: [],
 )
 class SpecialtiesComponent implements OnInit {
-  final SpecialtyList _specialtyList = SpecialtyList();
+  @Input()
+  SpecialtyList specialtyList;
   Map<Title, List<Specialty>> spByTitle;
 
   @override
   void ngOnInit() {
-    spByTitle = groupBy(_specialtyList.allSpecialties, (sp) => sp.data.requiredTitle);
+    spByTitle = groupBy(specialtyList.allSpecialties, (sp) => sp.data.requiredTitle);
   }
 
   void setMaxPoints(Specialty sp) {

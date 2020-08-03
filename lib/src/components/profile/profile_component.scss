@@ -22,7 +22,7 @@
 }
 
 .rune:hover {
-  background-color: $mat-light-green-700;
+  background-color: $mat-light-green-A700;
 }
 
 .rune material-button {
@@ -31,15 +31,19 @@
 }
 
 .rune.norune {
-  border: 2px dashed $mat-grey-900;
+  border: 1px dashed $mat-grey-900;
 }
 
 .rune.hasrune {
-  border: 2px solid $mat-grey-900;
+  border: 1px solid $mat-grey-900;
+}
+
+.winnerrune {
+  background-color: lime;
 }
 
 .selectedrune {
-  background-color: $mat-light-green-900;
+  border-width: 2px;
 }
 
 .saveclear {

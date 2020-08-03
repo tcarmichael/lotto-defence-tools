@@ -31,14 +31,8 @@ class SpecialtyList {
         spBank.pointsBought * ((env.targetRound - 1) / 10).floor() * 1000;
     var maxSp = profile.calcTotalSp() + spBankRounds;
 
-    print('Max SP: $maxSp');
-
     while (sp < maxSp) {
       var spEfficiencies = calcSpEfficiencies(env, ep, gems, profile.selectedRune);
-
-      if (sp == 0) {
-        spEfficiencies.forEach((o) => print('Efficency: ${o.efficiency}'));
-      }
 
       // Return if there isn't any SP (shouldn't happen) or if all efficienies are 0.
       if (spEfficiencies.isEmpty || spEfficiencies.every((o) => o.efficiency == 0)) {
@@ -58,9 +52,6 @@ class SpecialtyList {
         break;
       }
     }
-
-    var remainingSp = maxSp - sp;
-    print('Remaining SP: $remainingSp');
   }
 
   Stats calcStats() {
@@ -90,8 +81,6 @@ class SpecialtyList {
     // Calculate total stats and current DPS.
     var totalStats = Stats.init(env, spStats, ep, gems, rune);
     var currentDps = calcDps(totalStats, env);
-    var roundedDps = currentDps.toStringAsFixed(6);
-    print('Current DPS: $roundedDps');
 
     // Calculate the next SP efficiency for each SP.
     return allSpecialties.map((sp) =>

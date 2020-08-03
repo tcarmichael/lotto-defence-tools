@@ -8,6 +8,7 @@
                 [class.hasrune]="rune != null"
                 [class.norune]="rune == null"
                 [class.selectedrune]="i == profile.selectedRuneIndex"
+                [class.winnerrune]="rune != null && rune.baseStats.critDamage > 0"
                 (click)="onSelect(i)">
                 <div class="runeicon">
                     <div *ngIf="rune == null">
@@ -99,11 +100,6 @@
             [(selection)]="profile.title"
             [options]="Title.values">
         </material-dropdown-select>
-    </div>
-
-    <div class="saveclear">
-        <material-button raised (trigger)="save()">Save</material-button>
-        <material-button raised (trigger)="clear()">Clear</material-button>
     </div>
 </div>
 

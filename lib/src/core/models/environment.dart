@@ -1,7 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'difficulty.dart';
+import 'gem_list.dart';
+import 'profile.dart';
 import 'rank.dart';
+import 'rune.dart';
+import 'specialty_list.dart';
 import 'title.dart';
 
 import 'dart:math';
@@ -41,29 +45,44 @@ class Environment {
   factory Environment.fromJson(Map<String, dynamic> json) => _$EnvironmentFromJson(json);
   Map<String, dynamic> toJson() => _$EnvironmentToJson(this);
 
+  // num calcAverageUpgrade(Profile profile, SpecialtyList sp, GemList gems) {
+  //   var calculatedUpgradeChances = calcUpgradeChances(profile, sp, gems);
   num calcAverageUpgrade() {
     var calculatedUpgradeChances = 0;
-    var myUpgradeChances = 0;
-    var myTitle = Title.Divine;
     var upgradeRevisions = 0;
     var upgradeFailRevisions = 0;
     var doubleUpgradeLottos = 0;
+    // var hasUpgradeMastery = profile.title.index >= Title.Master.index;
+    // var isTheZero = profile.title.index >= Title.TheZero.index;
     var hasUpgradeMastery = true;
+    var isTheZero = false;
 
     var successProbability = Environment.fnUpC(
         calculatedUpgradeChances,
-        myTitle.index >= Title.TheZero.index,
+        isTheZero,
         upgradeRevisions,
         upgradeFailRevisions);
 
     var averageUpgrade = 30 *
             successProbability *
-            max(calculatedUpgradeChances, myUpgradeChances) *
+            calculatedUpgradeChances *
             ((100 + doubleUpgradeLottos) / 100) +
         (hasUpgradeMastery
             ? calculatedUpgradeChances * (1 - successProbability) * 10 / 2
             : 0);
     return averageUpgrade;
+  }
+
+  int calcUpgradeChances(Profile profile, SpecialtyList sp, GemList gems) {
+    // var spUps = ;
+    // var runeUps = profile.selectedRune.options.contains(RuneOptions.UpgradeChance) ? x : 0;
+    // // Over upgrade and over upgrade+ do not stack.
+    // var gemUps = (gems.selectedGems.contains(Gem.OverUpgradePlus)) ? x
+    //   : (gems.selectedGems.contains(Gem.OverUpgrade)) ? y
+    //   : 0;
+    // TODO: Add upgrades from GP.
+    // return 10 + spUps + runeUps + gemUps;
+    return 10;
   }
 
   static num calcBaseUp(bool zero, num upRev) {
@@ -81,8 +100,8 @@ class Environment {
     return upP;
   }
 
-  static num fnUpC(num tries, bool zero, num upRev, num upFRev) {
-    var upP = Environment.calcBaseUp(zero, upRev);
+  static num fnUpC(int tries, bool zero, int upRev, int upFRev) {
+    var upP = calcBaseUp(zero, upRev);
 
     // Fail increase
     var fI = 4 + 2 * upFRev;
